@@ -57,7 +57,7 @@ if config["host_removal"]:
             unclassified=lambda w: f"{OUTDIR}/host_removal/{w.sample}#.fq",
             fq_to_compress=lambda w: f"{OUTDIR}/host_removal/{w.sample}*.fq",
         shell:
-            """
+            rh_config["kraken2_path"]+"""
             kraken2 \
                 --db {params.db} \
                 --threads {threads} \
