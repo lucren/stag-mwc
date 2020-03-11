@@ -95,8 +95,7 @@ rule kraken2:
         confidence=kraken2_config["confidence"],
         extra=kraken2_config["extra"],
     shell:
-        kraken2_config["kraken2_path"]+"""
-        kraken2 \
+        kraken2_config["kraken2_path"]+"""kraken2 \
             --db {params.db} \
             --confidence {params.confidence} \
             --threads {threads} \
