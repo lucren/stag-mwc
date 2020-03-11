@@ -289,8 +289,8 @@ def main():
     prev_node = -1
     while len(all_nodes) > 0:
         #Remove node and insert children
-        curr_node = all_nodes.pop()
-        if len(curr_node.children) > 0:
+        curr_node = all_nodes.pop()    
+        if hasattr(curr_node, 'children') and len(curr_node.children) > 0: # we can get an interger here - need to check for that
             curr_node.children.sort()
             for node in curr_node.children:
                 all_nodes.append(node)
