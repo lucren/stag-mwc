@@ -54,8 +54,9 @@ def main(table_files, feature_column, value_column, outfile, fillna):
             .loc[:, [sample_name]])  # Ugly hack to get a single-column DataFrame
 
     df = tables[0]
-    for table in tables[1:]:
-        df = df.join(table, how="outer")
+    if len(tables) > 1:
+        for table in tables[1:]:
+            df = df.join(table, how="outer")
     df.fillna(fillna, inplace=True)
 
     df.to_csv(outfile, sep="\t")
@@ -63,7 +64,4 @@ def main(table_files, feature_column, value_column, outfile, fillna):
 
 if __name__ == "__main__":
     args = parse_args()
-    if len(args.TABLE) < 2:
-        print("Need at least two tables to merge!")
-        exit(1)
     main(args.TABLE, args.feature_column, args.value_column, args.outfile, args.fillna)

@@ -192,10 +192,10 @@ rule join_kaiju_reports:
     shell:
         """
         scripts/join_tables.py \
+            --TABLE {input} \
             --feature-column {params.feature_column} \
             --value-column {params.value_column} \
             --outfile {output} \
-            {input} \
             2>&1 > {log}
         """
     
