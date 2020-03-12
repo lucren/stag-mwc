@@ -548,6 +548,7 @@ rule join_bracken_filtered:
     shell:
         """
         scripts/join_tables.py \
+            --TABLE {input.bracken}
             --outfile {output.table} \
             --value-column {params.value_column} \
             --feature-column {params.feature_column} \
