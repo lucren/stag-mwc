@@ -154,10 +154,10 @@ rule join_kraken2_mpa:
     shell:
         """
         scripts/join_tables.py \
-            --TABLE {input.txt} \
             --outfile {output.table} \
             --value-column {params.value_column} \
             --feature-column {params.feature_column} \
+            {input.txt} \
             2>&1 > {log}
         """
 
@@ -394,10 +394,10 @@ rule join_bracken_mpa:
     shell:
         """
         scripts/join_tables.py \
-            --TABLE {input.txt} \
             --outfile {output.table} \
             --value-column {params.value_column} \
             --feature-column {params.feature_column} \
+            {input.txt} \
             2>&1 > {log}
         """
 
@@ -446,10 +446,10 @@ rule join_bracken:
     shell:
         """
         scripts/join_tables.py \
-            --TABLE {input.bracken} \
             --outfile {output.table} \
             --value-column {params.value_column} \
             --feature-column {params.feature_column} \
+            {input.bracken} \
             2>&1 > {log}
         """
     
@@ -548,9 +548,9 @@ rule join_bracken_filtered:
     shell:
         """
         scripts/join_tables.py \
-            --TABLE {input.bracken} \
             --outfile {output.table} \
             --value-column {params.value_column} \
             --feature-column {params.feature_column} \
+            {input.bracken} \
             2>&1 > {log}
         """

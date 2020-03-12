@@ -33,10 +33,6 @@ def parse_args():
             default=0.0,
             type=float,
             help="Fill NA values in merged table with FLOAT [%(default)s].")
-    
-    if len(argv) < 2:
-        parser.print_help()
-        exit()
 
     return parser.parse_args()
 

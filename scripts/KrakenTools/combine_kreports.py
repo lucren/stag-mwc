@@ -295,20 +295,21 @@ def main():
             for node in curr_node.children:
                 all_nodes.append(node)
         #Print information for this node 
-        o_file.write("%0.4f\t" % (float(curr_node.tot_all)/float(total_reads[0])*100))
-        o_file.write("%i\t" % curr_node.tot_all)
-        o_file.write("%i\t" % curr_node.tot_lvl)
-        if not args.c_only:
-            for i in range(num_samples):
-                if (i+1) not in curr_node.all_reads: 
-                    o_file.write("0\t0\t")
-                else:
-                    o_file.write("%i\t" % curr_node.all_reads[i+1])
-                    o_file.write("%i\t" % curr_node.lvl_reads[i+1])
-        o_file.write("%s\t" % curr_node.level_id)
-        o_file.write("%s\t" % curr_node.taxid)
-        o_file.write(" "*curr_node.level_num*2)
-        o_file.write("%s\n" % curr_node.name)
+        if hasattr(curr_node, 'tot_all'): # are we hitting the values withing the nodes as if they were nodes by accident?
+            o_file.write("%0.4f\t" % (float(curr_node.tot_all)/float(total_reads[0])*100))
+            o_file.write("%i\t" % curr_node.tot_all)
+            o_file.write("%i\t" % curr_node.tot_lvl)
+            if not args.c_only:
+                for i in range(num_samples):
+                    if (i+1) not in curr_node.all_reads: 
+                        o_file.write("0\t0\t")
+                    else:
+                        o_file.write("%i\t" % curr_node.all_reads[i+1])
+                        o_file.write("%i\t" % curr_node.lvl_reads[i+1])
+            o_file.write("%s\t" % curr_node.level_id)
+            o_file.write("%s\t" % curr_node.taxid)
+            o_file.write(" "*curr_node.level_num*2)
+            o_file.write("%s\n" % curr_node.name)
     o_file.close() 
 ####################################################################
 if __name__ == "__main__":
