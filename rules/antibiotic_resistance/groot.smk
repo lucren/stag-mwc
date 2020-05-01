@@ -28,9 +28,6 @@ if config["antibiotic_resistance"]:
 groot_config = config["groot"]
 rule create_groot_index:
     """Create groot index."""
-    output:
-        dbdir=DBDIR/"groot/{}".format(groot_config["db"]),
-        index=DBDIR/"groot/{db}_index".format(db=groot_config["db"]),
     log:
         str(LOGDIR/"groot/groot.get_index.log")
     shadow:
@@ -42,7 +39,8 @@ rule create_groot_index:
     params:
         dbdir=DBDIR/"groot/",
         db=groot_config["db"],
-        read_length=125,
+        read_length=150,
+        index=DBDIR/"groot/{db}_index".format(db=groot_config["db"])
     threads:
         4
     shell:
@@ -55,7 +53,7 @@ rule create_groot_index:
         groot index \
             --msaDir {params.dbdir}/{params.db} \
             --readLength {params.read_length} \
-            --outDir {output.index} \
+            --outDir {params.index} \
             --processors {threads} \
             --logFile {log}
         """
@@ -83,7 +81,7 @@ rule groot_align:
     threads:
         cluster_config["groot_align"]["n"] if "groot_align" in cluster_config else 8
     params:
-        index=groot_config["index"],
+        index=config["base_path"]+groot_config["index"],
         minlength=groot_config["minlength"],
         maxlength=groot_config["maxlength"],
     shell:
