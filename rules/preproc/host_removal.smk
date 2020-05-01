@@ -7,7 +7,7 @@ from snakemake.exceptions import WorkflowError
 
 rh_config = config["remove_host"]
 if config["host_removal"]:
-    db_path = Path(config["remove_host"]["db_path"])
+    db_path = Path(config["base_path"]+rh_config["db_path"])
     if not Path(db_path/"taxo.k2d").is_file():
         err_message = "Cannot find database for host sequence removal at: '{}/*.k2d'!\n".format(db_path)
         err_message += "Specify path to folder containing Kraken2 database for host removal in config.yaml.\n"
@@ -50,14 +50,14 @@ if config["host_removal"]:
         threads:
             cluster_config["remove_host"]["n"] if "remove_host" in cluster_config else 8
         params:
-            db=rh_config["db_path"],
+            db=config["base_path"]+rh_config["db_path"],
             confidence=rh_config["confidence"],
             extra=rh_config["extra"],
             classified=lambda w: f"{OUTDIR}/host_removal/{w.sample}.host#.fq",
             unclassified=lambda w: f"{OUTDIR}/host_removal/{w.sample}#.fq",
             fq_to_compress=lambda w: f"{OUTDIR}/host_removal/{w.sample}*.fq",
         shell:
-            rh_config["kraken2_path"]+"""kraken2 \
+            config["base_path"]+rh_config["kraken2_path"]+"""kraken2 \
                 --db {params.db} \
                 --threads {threads} \
                 --output {output.kraken} \

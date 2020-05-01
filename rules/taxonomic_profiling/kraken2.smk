@@ -25,8 +25,9 @@ localrules:
 
 kraken2_config = config["kraken2"]
 if config["taxonomic_profile"]["kraken2"]:
-    if not Path(kraken2_config["db"]).exists():
-        err_message = "No Kraken2 database folder at: '{}'!\n".format(kraken2_config["db"])
+    db_path = Path(config["base_path"]+kraken2_config["db"])
+    if not db_path.exists():
+        err_message = "No Kraken2 database folder at: '{}'!\n".format(db_path)
         err_message += "Specify the path in the kraken2 section of config.yaml.\n"
         err_message += "Run 'snakemake download_minikraken2' to download a copy into '{dbdir}'\n".format(dbdir=DBDIR/"kraken2") 
         err_message += "If you do not want to run kraken2 for taxonomic profiling, set 'kraken2: False' in config.yaml"
@@ -91,11 +92,11 @@ rule kraken2:
     singularity:
         "shub://ctmrbio/stag-mwc:stag-mwc"
     params:
-        db=kraken2_config["db"],
+        db=config["base_path"]+kraken2_config["db"],
         confidence=kraken2_config["confidence"],
         extra=kraken2_config["extra"],
     shell:
-        kraken2_config["kraken2_path"]+"""kraken2 \
+        config["base_path"]+kraken2_config["kraken2_path"]+"""kraken2 \
             --db {params.db} \
             --confidence {params.confidence} \
             --threads {threads} \
