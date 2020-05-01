@@ -12,7 +12,7 @@
 #########################
 # Run configuration
 #########################
-base_dir: "" # path that should be internally prepended to tool and database paths if needed (mainly indeded to make automation easier)
+base_path: "" # path that should be internally prepended to tool and database paths if needed (mainly indeded to make automation easier)
 inputdir: "input"
 input_fn_pattern: "{sample}_{readpair}.fq.gz" 
 outdir: "output_dir"
