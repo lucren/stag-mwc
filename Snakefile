@@ -33,7 +33,7 @@ configfile: "config.yaml"
 INPUTDIR = Path(config["inputdir"])
 OUTDIR = Path(config["outdir"])
 LOGDIR = Path(config["logdir"])
-DBDIR = Path(config["dbdir"])
+DBDIR = Path(config["base_path"]+config["dbdir"])
 all_outputs = []
 
 citations = {publications["StaG"], publications["Snakemake"]}

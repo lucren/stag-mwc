@@ -9,7 +9,7 @@ localrules:
     groot_report
 
 
-groot_db_path = Path(config["groot"]["index"])
+groot_db_path = Path(config["base_path"]+config["groot"]["index"])
 if config["antibiotic_resistance"]:
     if not Path(groot_db_path).exists():
         err_message = "No groot database found at: '{}'!\n".format(groot_db_path)
